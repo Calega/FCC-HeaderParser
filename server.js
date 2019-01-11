@@ -24,6 +24,19 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+app.get("/api/whoami", function(req,res) {
+  
+  // Ip : If you are behind a proxy or Nginx, both approaches might fail, but I opted to use this than to install a package
+  // Language can be retrieved from the request header
+  // User agent can be retrieve from the request header
+
+  res.json ( {
+     "ipaddress": req.header('x-forwarded-for').split(',')[0] || req.connection.remoteAddress,
+     "language": req.headers['accept-language'],
+     "software": req.headers['user-agent']
+  });
+  
+});
 
 
 // listen for requests :)
